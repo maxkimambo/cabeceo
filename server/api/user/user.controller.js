@@ -19,5 +19,13 @@ module.exports.create = function(req, res){
   user.save().then(user => {
       req.user = user;
       authService.setTokenCookie(req, res);
-  }); 
+  });
+}
+
+module.exports.findById = function(req, res){
+  console.log(req.params.id);
+  let userId = req.params.id;
+  User.findOne({_id:userId}).exec().then(user => {
+    res.json(user);
+  })
 }
