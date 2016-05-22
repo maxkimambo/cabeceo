@@ -45,30 +45,29 @@ function _findRawById(id){
   return User.findOne({_id: id}).exec();
 }
 
-module.exports.update = function(req, res){
-  console.log('got here');
+module.exports.update = function(req, res, next){
 
    let userId = req.params.id;
    let newUser = req.body;
 
-   console.log(userId);
-   console.log(newUser);
-
-
    _findRawById(userId).then(user => {
-       // loop over keys and update
-      //  Object.keys(newUser).forEach(k => {
-      //    user[k] = newUser[k];
-      //  });
     let userToSave = Object.assign(user, newUser);
 
-    res.json({result: userToSave });
      // save
-     userToSave.save().then(err => {
+     userToSave.save().then(user => {
+       // do something with the user
+         res.json({result: user });
+     }).catch(err => {
        log.error(err);
+       next(err);
      });
-
    });
+}
+
+module.exports.password = function(req, res){
+  let userId = req.parmams.id;
+  let oldPassword = req.body.oldPassword;
+  let newPassowrd = req.body.newPassword;
 
 
 }
