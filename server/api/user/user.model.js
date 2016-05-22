@@ -7,6 +7,9 @@ let Schema = mongoose.Schema;
 
 const authTypes = ['facebook'];
 
+// TODO: replace crypto with a more compatible library
+
+
 var UserSchema = new Schema({
 
   firstName: String,
@@ -256,7 +259,7 @@ UserSchema.methods = {
       }
     }
 
-    var defaultIterations = 10000;
+    var defaultIterations = 899892;
     var defaultKeyLength = 64;
     var salt = new Buffer(this.salt, 'base64');
 
