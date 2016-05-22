@@ -59,7 +59,7 @@ module.exports = {
 signToken: function signToken(id, role, done) {
       done(jwt.sign({ _id: id, role: role }, config.secrets.session, {
       expiresIn: settings.sessionTimeout
-   })); 
+   }));
  },
  setTokenCookie: function setTokenCookie(req, res) {
    if (!req.user) {
@@ -68,7 +68,7 @@ signToken: function signToken(id, role, done) {
    this.signToken(req.user._id, req.user.role, function(token){
      res.cookie('token', token);
      req.user.token = token;
-     res.json(req.user);
+     res.json(token);
    });
 
 
