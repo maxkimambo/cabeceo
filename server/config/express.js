@@ -17,7 +17,7 @@ let lusca = require('lusca');
 let config = require('./environment');
 let passport = require('passport');
 let session = require('express-session');
-
+let log = require('./../components/logger');
 module.exports =  function(app) {
   var env = app.get('env');
 
@@ -31,7 +31,6 @@ module.exports =  function(app) {
   app.use(cookieParser());
   app.use(passport.initialize());
 
-
   var redisStore = require('connect-redis')(session);
 
   // Persist sessions with MongoStore / sequelizeStore
@@ -43,7 +42,6 @@ module.exports =  function(app) {
     saveUninitialized: true,
     store: new redisStore({host: config.redis.host, port: config.redis.port, prefix: 'sess_'})
   }));
-
 
   // /**
   //  * Lusca - express server security
@@ -83,8 +81,8 @@ module.exports =  function(app) {
   }
 
   if ('development' === env || 'test' === env) {
-    app.use(express.static(path.join(config.root, '.tmp')));
-    app.use(express.static(app.get('appPath')));
+    // app.use(express.static(path.join(config.root, '.tmp')));
+    // app.use(express.static(app.get('appPath')));
     app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last
   }

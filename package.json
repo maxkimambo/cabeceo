@@ -5,6 +5,7 @@
   "dependencies": {
     "bluebird": "^3.3.3",
     "body-parser": "^1.13.3",
+    "bunyan": "^1.8.1",
     "composable-middleware": "^0.3.0",
     "compression": "^1.5.2",
     "connect-redis": "^3.0.2",

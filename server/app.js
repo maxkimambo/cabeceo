@@ -9,16 +9,20 @@ let mongoose = require('mongoose')
  mongoose.Promise = require('bluebird');
 let config = require('./config/environment');
 let http = require('http');
+let log = require('./components/logger');
+
+// add logger
+let bunyan = require('bunyan');
+
 
 // Connect to MongoDB
+log.info(config.mongo); 
 mongoose.connect(config.mongo.uri, config.mongo.options);
 mongoose.connection.on('error', function(err) {
-    console.error('MongoDB connection error: ' + err);
+    log.error(`MongoDB connection error:  + ${err}`);
     process.exit(-1);
 });
 
-// Populate databases with sample data
-if (config.seedDB) { require('./config/seed'); }
 
 // Setup server
 var app = express();
@@ -30,7 +34,8 @@ require('./routes')(app);
 // Start server
 function startServer() {
     app.angularFullstack = server.listen(config.port, config.ip, function() {
-        console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
+
+        log.info('Express server started on %d, in %s mode', config.port, app.get('env'));
     });
 }
 

@@ -30,11 +30,10 @@ var all = {
 
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
-    session: 'app-secret'
+    session: localEnv.SESSION_SECRET
   },
-
+  sessionTimeout: 60* 60* 5 ,
   //MongoDB connection options
-
   mongo: {
     options: {
       db: {
