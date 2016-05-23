@@ -11,6 +11,8 @@ router.post('/update/:id', userController.update);
 
 router.post('/password/:id', userController.password);
 
+router.post('/status/:id', userController.setStatus);
+
 // /api/users/   POST
 router.post('/', userController.create);
 

@@ -74,7 +74,7 @@ module.exports.password = function(req, res){
 
     User.findOne({_id: userId}).exec().then(u => {
        if (u.authenticate(oldPassword)){
-        
+
          u.password = newPassword;
          u.save().then(() => { res.status(204).end()});
        }
@@ -82,6 +82,22 @@ module.exports.password = function(req, res){
          res.status(403).end();
        }
     });
+}
+/*
+* Updates user status
+* can be set to different things like active : inactive : disabled etc 
+*/
+module.exports.setStatus = function(req, res){
+  let userId = req.params.id;
+  let status = req.body.status;
+
+  User.findOne({_id: userId}).exec().then(user => {
+      user.status = status;
+      user.save().then(() => {res.status(204).end()});
+  }).catch(err => {
+    log.error(err);
+    next(err);
+  });
 }
 
 /**

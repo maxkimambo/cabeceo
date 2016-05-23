@@ -68,7 +68,8 @@ var UserSchema = new Schema({
   google: {},
   github: {},
   userSince: {type: Date, default: Date.now},
-  lastLogin: {type: Date, default: Date.now}
+  lastLogin: {type: Date, default: Date.now},
+  status: String 
 });
 
 /**
