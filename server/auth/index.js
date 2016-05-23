@@ -7,8 +7,6 @@ var settings = require( '../config/environment');
 let jwt = require( 'jsonwebtoken');
 let expressJwt = require( 'express-jwt');
 
-console.log(settings);
-
 // configure passport
 var setupPassport = require('./local/passport');
 setupPassport(User, config);
