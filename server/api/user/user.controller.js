@@ -68,21 +68,20 @@ module.exports.update = function(req, res, next){
 *  Changes the user password
 */
 module.exports.password = function(req, res){
-  let userId = req.parmams.id;
+  let userId = req.params.id;
   let oldPassword = req.body.oldPassword;
   let newPassword = req.body.newPassword;
 
-  if (_verifyPassword(userId, oldPassword)){
-    User.findOne({_id: userId}).exec().then(user => {
-      user.password = newPassword;
-      user.save().then(() => {
-          res.status(204).end();
-      })
-      .catch(validationError(res));
+    User.findOne({_id: userId}).exec().then(u => {
+       if (u.authenticate(oldPassword)){
+        
+         u.password = newPassword;
+         u.save().then(() => { res.status(204).end()});
+       }
+       else {
+         res.status(403).end();
+       }
     });
-  }else {
-    return res.status(403).end();
-  }
 }
 
 /**

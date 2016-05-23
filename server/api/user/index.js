@@ -4,12 +4,12 @@ let userController = require('./user.controller');
 let auth = require('./../../auth/auth.service');
 
 // routes for api/users
-router.get('/', auth.isAuthenticated(), userController.index);
+router.get('/',  userController.index);
 
 // api/users/update/:id  POST
 router.post('/update/:id', userController.update);
 
-router.post('/password:id', userController.password);
+router.post('/password/:id', userController.password);
 
 // /api/users/   POST
 router.post('/', userController.create);

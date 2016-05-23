@@ -1,4 +1,4 @@
 .idea/
 node_modules/
 npm-debug.log
-local.env.js
+server/config/local.env.js
