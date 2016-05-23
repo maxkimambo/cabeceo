@@ -6,7 +6,6 @@ let authService = require('./../auth.service');
 let User = require('../../api/user/user.model');
 var router = express.Router();
 
-
 // if you follow the route composition
 // we are at /api/authenticate/local
 router.post('/', function(req, res, next) {
@@ -30,7 +29,6 @@ router.post('/', function(req, res, next) {
             // authenticate the user using local strategy
             passport.authenticate('local', function(err, user, info) {
                 var error = err || info;
-
 
                 if (error) {
                     return next(error);
