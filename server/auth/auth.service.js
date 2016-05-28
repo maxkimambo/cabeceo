@@ -1,5 +1,5 @@
 'use strict';
-
+/*global require, module, __dirname */ 
 let passport = require( 'passport');
 let config = require( '../config/environment');
 let jwt = require( 'jsonwebtoken');

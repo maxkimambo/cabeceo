@@ -1,3 +1,6 @@
+'use strict';
+
+
 let router = require('express').Router();
 let log = require('./../../components/logger');
 let userController = require('./user.controller');

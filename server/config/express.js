@@ -4,12 +4,13 @@
 
 'use strict';
 
+/*global require, module, __dirname */ 
 let express = require('express');
 let favicon = require('serve-favicon');
 let morgan = require('morgan');
 let compression = require('compression');
 let bodyParser = require ('body-parser');
-let  methodOverride = require('method-override');
+let methodOverride = require('method-override');
 let cookieParser = require('cookie-parser');
 let errorHandler = require('errorhandler');
 let path = require('path');
@@ -40,6 +41,7 @@ module.exports =  function(app) {
   app.use(session({
     secret: config.secrets.session,
     saveUninitialized: true,
+    resave: true,
     store: new redisStore({host: config.redis.host, port: config.redis.port, prefix: 'sess_'})
   }));
 

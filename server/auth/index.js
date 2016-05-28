@@ -1,3 +1,5 @@
+'use strict';
+/*global require, module, __dirname */ 
 let express = require('express');
 let passport = require('passport');
 let config = require('../config/environment');

@@ -1,3 +1,5 @@
+'use strict';
+
 let config = require('./../../config/environment');
 let User = require('./user.model');
 let jwt = require('jsonwebtoken');
@@ -64,10 +66,12 @@ module.exports.update = function(req, res, next){
      });
    });
 }
+
 /**
 *  Changes the user password
 */
 module.exports.password = function(req, res){
+
   let userId = req.params.id;
   let oldPassword = req.body.oldPassword;
   let newPassword = req.body.newPassword;
@@ -85,7 +89,7 @@ module.exports.password = function(req, res){
 }
 /*
 * Updates user status
-* can be set to different things like active : inactive : disabled etc 
+* can be set to different things like active : inactive : disabled etc
 */
 module.exports.setStatus = function(req, res){
   let userId = req.params.id;

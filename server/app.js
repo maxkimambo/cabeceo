@@ -1,9 +1,6 @@
-/**
- * Main application file
- */
-
+/* jshint node: true */
 'use strict';
-
+/*global require, module, __dirname */
 let express = require('express');
 let mongoose = require('mongoose')
  mongoose.Promise = require('bluebird');
@@ -16,7 +13,7 @@ let bunyan = require('bunyan');
 
 
 // Connect to MongoDB
-log.info(config.mongo); 
+log.info(config.mongo);
 mongoose.connect(config.mongo.uri, config.mongo.options);
 mongoose.connection.on('error', function(err) {
     log.error(`MongoDB connection error:  + ${err}`);
@@ -31,15 +28,8 @@ var server = http.createServer(app);
 require('./config/express')(app);
 require('./routes')(app);
 
-// Start server
-function startServer() {
-    app.angularFullstack = server.listen(config.port, config.ip, function() {
-
-        log.info('Express server started on %d, in %s mode', config.port, app.get('env'));
-    });
-}
-
-setImmediate(startServer);
-
+server.listen(config.port, config.ip, function() {
+    //log.info('Express server started on %d, in %s mode', config.port, app.get('env'));
+});
 // Expose app
 module.exports = app;
