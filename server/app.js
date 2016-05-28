@@ -14,7 +14,6 @@ let bunyan = require('bunyan');
 
 
 // Connect to MongoDB
-log.info(config.mongo);
 mongoose.connect(config.mongo.uri, config.mongo.options);
 mongoose.connection.on('error', function(err) {
     log.error(`MongoDB connection error:  + ${err}`);
