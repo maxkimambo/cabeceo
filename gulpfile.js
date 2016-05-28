@@ -1,5 +1,6 @@
 'use strict';
-
+/* jshint node: true */
+/*global require */
 
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
@@ -26,9 +27,9 @@ gulp.task('serve', ['jsstyle'], function(){
         'PORT': 9000
       },
       watch : jsFiles
-    }
+    }; 
     return nodemon(options)
-          .on('restart', function(ev){
-              console.log('test'); 
+          .on('restart', function(){
+
           });
 });

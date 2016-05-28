@@ -1,10 +1,10 @@
+'use strict';
+/*global require, module */
+
 /**
  * Express configuration
  */
 
-'use strict';
-
-/*global require, module, __dirname */ 
 let express = require('express');
 let favicon = require('serve-favicon');
 let morgan = require('morgan');
@@ -14,11 +14,10 @@ let methodOverride = require('method-override');
 let cookieParser = require('cookie-parser');
 let errorHandler = require('errorhandler');
 let path = require('path');
-let lusca = require('lusca');
 let config = require('./environment');
 let passport = require('passport');
 let session = require('express-session');
-let log = require('./../components/logger');
+
 module.exports =  function(app) {
   var env = app.get('env');
 
@@ -88,4 +87,4 @@ module.exports =  function(app) {
     app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last
   }
-}
+};

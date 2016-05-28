@@ -1,6 +1,7 @@
-/* jshint node: true */
+
 'use strict';
 /*global require, module, __dirname */
+/* jshint node: true */
 let express = require('express');
 let mongoose = require('mongoose')
  mongoose.Promise = require('bluebird');

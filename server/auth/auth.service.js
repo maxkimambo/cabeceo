@@ -1,6 +1,6 @@
 'use strict';
-/*global require, module, __dirname */ 
-let passport = require( 'passport');
+/*global require, module */
+// let passport = require( 'passport');
 let config = require( '../config/environment');
 let jwt = require( 'jsonwebtoken');
 let expressJwt = require( 'express-jwt');
@@ -46,7 +46,7 @@ module.exports = {
    }
 
    return compose()
-     .use(isAuthenticated())
+     .use(this.isAuthenticated())
      .use(function meetsRequirements(req, res, next) {
        if (config.userRoles.indexOf(req.user.role) >=
            config.userRoles.indexOf(roleRequired)) {
@@ -73,6 +73,5 @@ signToken: function signToken(id, role, done) {
 
 
   //  res.redirect('/');
- }
-
 }
+};

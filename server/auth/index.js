@@ -1,13 +1,13 @@
 'use strict';
-/*global require, module, __dirname */ 
+/*global require, module */
 let express = require('express');
-let passport = require('passport');
+
 let config = require('../config/environment');
 let User = require('../api/user/user.model');
-let authService = require('./auth.service');
+// let authService = require('./auth.service');
+
 var settings = require( '../config/environment');
 let jwt = require( 'jsonwebtoken');
-let expressJwt = require( 'express-jwt');
 
 // configure passport
 var setupPassport = require('./local/passport');
@@ -18,8 +18,8 @@ var router = express.Router();
 
 // if you follow the route composition
 // we are at /api/authenticate/local
-router.post('/local', function(req, res, next) {
-  var message = "auth endpoint";
+router.post('/local', function(req, res) {
+
   let username = req.body.username;
   let password = req.body.password;
 
@@ -49,7 +49,7 @@ router.post('/local', function(req, res, next) {
             _id: user._id,
             provider: user.provider,
             email: user.email
-        }
+        };
 
         let token = jwt.sign(userForToken, settings.secrets.session, {
           sessionTimeout:settings.sessionTimeout
