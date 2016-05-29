@@ -8,7 +8,7 @@ let mongoose = require('mongoose')
 let config = require('./config/environment');
 let http = require('http');
 let log = require('./components/logger');
-
+let seeder = require('./config/seed');
 // add logger
 let bunyan = require('bunyan');
 
@@ -19,6 +19,10 @@ mongoose.connection.on('error', function(err) {
     log.error(`MongoDB connection error:  + ${err}`);
     process.exit(-1);
 });
+
+// seed the data
+//seeder(100);
+
 
 
 // Setup server

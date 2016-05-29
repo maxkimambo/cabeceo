@@ -48,9 +48,7 @@ var UserSchema = new Schema({
   bioText : String,
   photos : [String],
   friends: [String],
-  followers: [String],
-  following: [String],
-    role: {
+      role: {
     type: String,
     default: 'user'
   },

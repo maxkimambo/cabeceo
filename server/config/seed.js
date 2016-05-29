@@ -1,5 +1,92 @@
 /* global module */
-module.exports = {};
+'use strict';
+
+var Chance = require('chance');
+var chance = new Chance();
+var User = require('../api/user/user.model');
+var log = require('./../components/logger');
+
+var dances = [
+  {name: 'Salsa', proficiency: chance.integer({min:0, max:10})},
+  {name: 'Bachata', proficiency: chance.integer({min:0, max:10})},
+  {name: 'Kizomba', proficiency: chance.integer({min:0, max:10})},
+  {name: 'Tango', proficiency: chance.integer({min:0, max:10})},
+  {name: 'Merengue', proficiency: chance.integer({min:0, max:10})},
+  {name: 'Ballet', proficiency: chance.integer({min:0, max:10})},
+  {name: 'Hiphop', proficiency: chance.integer({min:0, max:10})},
+  {name: 'Afrobeat', proficiency: chance.integer({min:0, max:10})},
+];
+var membershipTypes = ['basic', 'premium', 'school', 'promoter'];
+var languages = ['English', 'German', 'French', 'Spanish', 'Italian', 'Bulgarian'];
+
+
+function generateUserData(){
+
+  // return {
+  //        provider: 'local',
+  //        firstName: chance.first(),
+  //        lastName: chance.last(),
+  //        name:  chance.first() + ' '+ chance.last(),
+  //        gender: chance.gender(),
+  //        score: chance.integer({min: 10, max:1000}),
+  //        Newsletter: chance.bool(),
+  //        optInDate: chance.date(),
+  //        dateOfBirth: chance.birthday(),
+  //        height: chance.integer({min: 150, max:220}),
+  //        mobile: chance.phone({country: "fr", mobile: true}),
+  //        address: chance.address(),
+  //        dances: chance.pickset(dances, 3),
+  //        bioText: chance.sentence(),
+  //        photos: ['photo1.jpg', 'photo2.jpg'],
+  //        membershipType: chance.pick(membershipTypes),
+  //        userSince: chance.date(),
+  //        lastLogin: chance.date(),
+  //        email: chance.email(),
+  //        password: chance.word()
+  // };
+  return User.create({
+    provider: 'local',
+         firstName: chance.first(),
+         lastName: chance.last(),
+         name:  chance.first() + ' '+ chance.last(),
+         gender: chance.gender(),
+         score: chance.integer({min: 10, max:1000}),
+         Newsletter: chance.bool(),
+         optInDate: chance.date(),
+         dateOfBirth: chance.birthday(),
+         height: chance.integer({min: 150, max:220}),
+         mobile: chance.phone({country: "de", mobile: true}),
+         address: {
+           street: chance.word(),
+           house: chance.integer({min:1, max:200}),
+           plz : chance.integer({min:10000, max:80000}),
+           city: chance.city(),
+           country: chance.country({full: true})
+         },
+         languages: chance.pickset(languages, 2),
+         dances: chance.pickset(dances, 3),
+         matchDances: chance.pickset(dances, 3),
+         bioText: chance.sentence(),
+         photos: ['photo1.jpg', 'photo2.jpg'],
+         membershipType: chance.pick(membershipTypes),
+         userSince: chance.date(),
+         lastLogin: chance.date(),
+         email: chance.email(),
+         password: chance.word()
+  });
+
+}
+
+
+function seed(records){
+  for(let i=0; i<= records; i++){
+      generateUserData().then(u =>{
+        console.log('user inserted'); 
+      });
+  }
+
+}
+module.exports = seed;
 
 
 
