@@ -5,7 +5,7 @@ let mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 let Schema = mongoose.Schema;
 
-const authTypes = ['facebook'];
+const authTypes = ['facebook', 'local'];
 
 // TODO: replace crypto with a more compatible library
 
@@ -41,7 +41,10 @@ var UserSchema = new Schema({
       }
     }
   },
+  languages: [String],
   dances : [{name: String, proficiency : Number}],
+  matchDances: [{ name: String, proficiency: Number }],
+  matchPreference: {age: Number,  height: Number, distance: Number},
   bioText : String,
   photos : [String],
   friends: [String],
@@ -99,6 +102,11 @@ UserSchema
 /**
  * Validations
  */
+// ensure firstName is specified
+UserSchema.path('firstName').validate(function(fn){
+  return fn != null;
+});
+
 
 // Validate empty email
 UserSchema

@@ -22,6 +22,7 @@ router.post('/', userController.create);
 // /api/users/:id GET
 router.get('/:id', userController.findById);
 
+router.delete('/:id', userController.remove); 
 
 
 module.exports = router;

@@ -91,5 +91,6 @@
       "exports": true,
       "__dirname": true
       } ,       // additional predefined global variables
-      "-W097": false
+      "-W097": false,
+      "-W117": false
 }

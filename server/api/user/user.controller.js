@@ -14,6 +14,7 @@ module.exports.index = function(req, res){
      User.find({}, '-salt -password').exec().then(users => {
        res.status(200);
        res.json(users);
+
     });
 }
 
@@ -25,13 +26,15 @@ module.exports.create = function(req, res){
   user.save().then(user => {
       req.user = user;
       authService.setTokenCookie(req, res);
+  })
+  .catch(err => {
+    res.status(412).end();
   });
 }
 
 // fetches user by Id
 module.exports.findById = function(req, res){
   let userId = req.params.id;
-
    _findById(userId).then(user => {
     res.json(user);
   });
@@ -102,6 +105,29 @@ module.exports.setStatus = function(req, res){
     log.error(err);
     next(err);
   });
+}
+
+/**
+* Removes the user from the database
+* To be used for account deletion.
+*/
+module.exports.remove = function(req, res){
+
+  let userId = req.params.id;
+  console.log(userId);
+  // build the query
+  User.remove({_id: userId}).then(u => {
+    console.log(u);
+    // u.remove();
+    res.status(200).end();
+  });
+  // var query = User.find().remove({_id: userId});
+  //
+  // // execute the query
+  // query.remove({_id: userId},function(){
+  //     res.status(200);
+  // });
+  // res.status(200);
 }
 
 /**
