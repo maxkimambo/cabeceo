@@ -23,8 +23,6 @@ mongoose.connection.on('error', function(err) {
 // seed the data
 //seeder(100);
 
-
-
 // Setup server
 var app = express();
 var server = http.createServer(app);

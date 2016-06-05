@@ -17,6 +17,8 @@ let path = require('path');
 let config = require('./environment');
 let passport = require('passport');
 let session = require('express-session');
+let multer = require('multer');
+// let upload = multer({dest: './../../uploads'});
 
 module.exports =  function(app) {
   var env = app.get('env');
@@ -37,6 +39,11 @@ module.exports =  function(app) {
   // We need to enable sessions for passport-twitter because it's an
   // oauth 1.0 strategy, and Lusca depends on sessions
   // changed to store ression in Redis
+
+  // enabling photo uploads
+
+  // app.use(upload.single('photo'));
+
   app.use(session({
     secret: config.secrets.session,
     saveUninitialized: true,
