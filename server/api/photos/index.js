@@ -11,10 +11,7 @@ let upload = multer({
   },
   rename: function(fieldname, filename){
      return fieldname + filename + Date.now();
-  },
-  onFileUploadComplete: function (file) {
-  console.log(file.fieldname + ' uploaded to  ' + file.path)
-}
+  }
 
 });
 

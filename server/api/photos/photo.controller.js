@@ -3,18 +3,34 @@ let AWS = require('aws-sdk');
 let config = require('../../config/local.env');
 const bucket = "maxkimambotest";
 let fs = require('fs');
+let User = require('../user/user.model');
 
-console.log(config.AWS_KEY);
 module.exports.getById = function(req, res){
+  // grab photo from s3
+
 
 }
 
+/**
+* Fetches all photo url associated with the user
+*/
+module.exports.getByUserId = function(req, res){
+
+}
+
+function _getExtension(file){
+  return file.substr(file.length -3);
+}
+//TODO: refactor this method.
 module.exports.uploadPhoto = function(req, res){
 
   let userId = req.body.id;
-  console.log(req.file);
+
+  let extension = _getExtension(req.file.originalname);
+
   // generate name to use
-  let fileName = _generateFileName(userId, req.file.filename);
+  let fileName = _generateFileName(userId, req.file.filename) +'.'+ extension;
+
   req.body.fileName = fileName;
 
   // upload the renamed file to S3
@@ -25,25 +41,65 @@ module.exports.uploadPhoto = function(req, res){
 
   var s3Object = new AWS.S3({params: {Bucket: bucket, Key: fileName}});
   s3Object.upload({Body: photofile}).send(function(err,data){
-    console.log(err,data);
+
+    if(!err){
+       _addPhotoToUser(userId, data.Location );
+      console.log(data);
+      // remove the file from local storage
+      _deleteLocal(req.file.path, function(err,res){
+          console.log(err, res);
+      })
+    }
   });
 
 
-
+  // save new filepath to the user object
   res.json(req.body);
 }
 
-module.exports.delete = function(req, res){
+module.exports.delete = function(req, res, next){
+  let fileKey = req.params.id;
+  AWS.config.update({accessKeyId: config.AWS_ID, secretAccessKey: config.AWS_KEY, region: config.AWS_REGION});
+
+  var s3 = new AWS.S3({params: {Bucket: bucket, Key: fileKey}});
+
+  var params = {
+    Bucket: bucket, /* required */
+    Key: fileKey, /* required */
+    VersionId: null
+  };
+
+
+  s3.deleteObject(params, function(err,data){
+    if (err){
+      next(err);
+    }
+    res.send('done');
+  });
 
 }
+
+function _addPhotoToUser(userId, filePath){
+  // find user with this id;
+  User.findOne({_id: userId}).then(user => {
+
+    if(user){
+      console.log('found user pushing data');
+        user.photos.push(filePath);
+        // save back the user
+        user.save().then(u =>{
+
+        });
+    }
+
+  });
+
+}
+
+function _deleteLocal(path, done){
+  return fs.unlink(path, done);
+  }
+
 function _generateFileName(id, file){
   return `${id}_${file}`;
-}
-
-function _renameFile(filePath, newName){
-
-}
-
-function _uploadOverHttp(url){
-
 }
