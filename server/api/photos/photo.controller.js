@@ -4,6 +4,7 @@ let config = require('../../config/local.env');
 const bucket = "maxkimambotest";
 let fs = require('fs');
 let User = require('../user/user.model');
+let log = require('../../components/logger');
 
 module.exports.getById = function(req, res){
   // grab photo from s3
@@ -69,12 +70,11 @@ module.exports.delete = function(req, res, next){
     VersionId: null
   };
 
-
   s3.deleteObject(params, function(err,data){
     if (err){
       next(err);
     }
-    res.send('done');
+    res.status(200).end();
   });
 
 }
@@ -84,11 +84,10 @@ function _addPhotoToUser(userId, filePath){
   User.findOne({_id: userId}).then(user => {
 
     if(user){
-      console.log('found user pushing data');
         user.photos.push(filePath);
         // save back the user
-        user.save().then(u =>{
-
+        user.save().catch(err => {
+          log.error(err);
         });
     }
 
