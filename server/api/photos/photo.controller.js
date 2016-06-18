@@ -81,18 +81,22 @@ module.exports.delete = function(req, res, next){
 
 function _addPhotoToUser(userId, filePath){
   // find user with this id;
-  User.findOne({_id: userId}).then(user => {
-
-    if(user){
-        user.photos.push(filePath);
-        // save back the user
-        user.save().catch(err => {
-          log.error(err);
-        });
-    }
-
+  User.findOne({_id: userId}).then(u => {
+    return saveUser(u, filePath)
   });
+}
 
+function saveUser(user, filePath){
+  if(user){
+      user.photos.push(filePath);
+      // save back the user
+    return user.save().then(u => {
+        console.log(u);
+
+      }).catch(err => {
+        log.error(err);
+      });
+  }
 }
 
 function _deleteLocal(path, done){
